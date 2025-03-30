@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование билетов</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="/static/fonts/stylesheet.css">
+    <script src="../js/index.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../icons/logo.svg" alt="Логотип">
+        </div>
+        <div class="auth-buttons">
+            <button class="btn" onclick="window.location.href='/register'">Регистрация</button>
+            <button class="btn">Вход</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <img src="../images/main.png" alt="Поезд" class="background-img">
+            <div class="hero-text">
+                <h1>Выбирайте лучшие билеты</h1>
+            </div>          
+        </section>
+
+        <section class="search">
+            <div class="routes">
+                <span>⚡ Актуальные направления для Москва</span>
+                <div class="destinations">
+                    <button class="destination-btn">
+                        Сочи
+                    </button>
+                    <button class="destination-btn">
+                        Калининград
+                    </button>
+                    <button class="destination-btn active">
+                        Санкт-Петербург
+                    </button>
+                </div>
+            </div>
+            <div class="form">
+                <div class="field">
+                    <label>Откуда</label>
+                    <div class="input-wrapper">
+                        <img src="../icons/Train.png" alt="Поезд" class="icon">
+                        <select>
+                            <option>Москва</option>
+                        </select>        
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Куда</label>
+                    <div class="input-wrapper">
+                        <img src="../icons/Train.png" alt="Поезд" class="icon">
+                        <select>
+                            <option>Калининград</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Туда</label>
+                    <div class="input-wrapper">
+                        <img src="../icons/Clock.png" alt="Дата" class="icon left">
+                        <input type="date" id="departure-date" class="hidden-input" value="2025-03-06">
+                        <div id="formatted-departure" class="formatted-date">6 марта / чт</div>
+                        <span class="icon right" id="calendar-icon-departure"></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Обратно</label>
+                    <div class="input-wrapper">
+                        <img src="../icons/Clock.png" alt="Дата" class="icon left">
+                        <input type="date" id="return-date" class="hidden-input" value="2025-03-06">
+                        <div id="formatted-return" class="formatted-date">6 марта / чт</div>
+                        <span class="icon right" id="calendar-icon-return"></span>
+                    </div>
+                </div>                
+                <div class="field">
+                    <label>Кол-во пассажиров</label>
+                    <div class="input-wrapper">
+                        <img src="../icons/Human.png" alt="Пассажиры" class="icon">
+                        <select>
+                            <option>3 пассажира</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="search-btn">Найти »</button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+
