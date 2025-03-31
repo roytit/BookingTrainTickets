@@ -10,7 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(express.json());
+app.use(express.json()); // Должен быть перед роутами
+app.use(express.urlencoded({ extended: true }));
 
 // Статические файлы
 app.use(express.static(path.join(__dirname, 'public')));
