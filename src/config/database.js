@@ -11,17 +11,14 @@ const sequelize = new Sequelize({
   port: process.env.DB_PORT,
   dialect: 'postgres',
   dialectOptions: {
-    ssl: false, // Отключаем SSL для локального подключения
-    // Дополнительные опции при необходимости:
-    // connectTimeout: 10000 // Таймаут подключения 10 секунд
+    ssl: false
   },
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
     idle: 10000
-  },
-  logging: console.log // Включаем логи для отладки
+  }
 });
 
 // Тест подключения
