@@ -24,6 +24,18 @@ const User = sequelize.define('User', {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 1
+  },
+  first_name: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  last_name: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  middle_name: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   tableName: 'users',

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет</title>
+  <link rel="stylesheet" href="../css/user_info.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🔳</div>
+    <button class="logout-btn" id="logoutBtn">Выйти</button>
+  </header>
+  
+  <main>
+    <h1>Личный кабинет</h1>
+    
+    <nav>
+      <button class="tab active">Информация об аккаунте</button>
+      <button class="tab" onclick="window.location.href='/profile/user-history'">Заказы</button>
+    </nav>
+    
+    <section class="user-info">
+      <div class="info-row">
+        <span>Почта</span>
+        <span id="email"></span>
+        <button class="edit-btn">✎ Изменить</button>
+      </div>
+      <div class="info-row">
+        <span>Смена пароля</span>
+        <span id="password">•••••••••</span>
+        <button class="edit-btn">✎ Изменить</button>
+      </div>
+      <div class="info-row">
+        <span>Фамилия</span>
+        <span id="lastName"></span>
+        <button class="edit-btn">✎ Изменить</button>
+      </div>
+      <div class="info-row">
+        <span>Имя</span>
+        <span id="firstName"></span>
+        <button class="edit-btn">✎ Изменить</button>
+      </div>
+      <div class="info-row">
+        <span>Отчество</span>
+        <span id="middleName"></span>
+        <button class="edit-btn">✎ Изменить</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/user_info.js"></script>
+</body>
+</html>

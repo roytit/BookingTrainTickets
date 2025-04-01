@@ -178,9 +178,8 @@ export const checkAuth = async (req, res) => {
       return res.status(401).json({ error: 'Требуется авторизация' });
     }
     
-    // Можно добавить дополнительную проверку пользователя в БД
     const user = await User.findByPk(req.session.user.id, {
-      attributes: ['user_id', 'email']
+      attributes: ['user_id', 'email', 'last_name', 'first_name', 'middle_name']
     });
     
     if (!user) {
@@ -189,7 +188,10 @@ export const checkAuth = async (req, res) => {
     
     res.json({
       id: user.user_id,
-      email: user.email
+      email: user.email,
+      last_name: user.last_name,
+      first_name: user.first_name,
+      middle_name: user.middle_name
     });
   } catch (error) {
     console.error('Ошибка проверки авторизации:', error);

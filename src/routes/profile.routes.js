@@ -7,9 +7,14 @@ const __dirname = path.dirname(__filename);
 
 const router = Router();
 
-// Главная страница бронирования (путь остаётся /booking)
-router.get('/profile', async (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/templates/profile.html'));
+// Профиль с инофрмацией о пользователе
+router.get('/user-info', async (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/templates/user_info.html'));
 });
+
+// Профиль с историей бронирования
+router.get('/user-history', async (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/templates/user_history.html'));
+})
 
 export default router;

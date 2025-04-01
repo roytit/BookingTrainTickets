@@ -25,7 +25,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     }
     
     // Редирект после успешного входа
-    window.location.href = '/profile'; // Жёстко задаём редирект
+    window.location.href = '/profile/user-info';
     
   } catch (error) {
     console.error('Ошибка входа:', error);
