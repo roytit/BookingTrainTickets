@@ -144,29 +144,64 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const {email, password} = req.body;
+    console.log('\n=== ПОПЫТКА ВХОДА ===');
+    console.log('Полученные данные:', req.body);
 
-    const user = await User.findOne({where: {email}})
+    const { email, password } = req.body;
 
-    if (!user){
+    // Добавляем валидацию
+    if (!email || !password) {
+      console.log('Ошибка: email или пароль не предоставлены');
+      return res.status(400).json({
+        success: false,
+        error: 'Email и пароль обязательны'
+      });
+    }
+
+    console.log('Поиск пользователя с email:', email);
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      console.log('Пользователь не найден');
       return res.status(401).json({
         success: false,
         error: 'Пользователь с таким email не найден'
-      })
+      });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password_hash)
+    console.log('\n=== ДАННЫЕ ДЛЯ ПРОВЕРКИ ===');
+    console.log('Введенный пароль:', `"${password}"`, `(длина: ${password.length})`);
+    console.log('Хеш в базе:', `"${user.password_hash}"`, `(длина: ${user.password_hash.length})`);
+    
+    console.log('\nПроверка пароля...');
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    console.log('Результат сравнения:', isPasswordValid);
 
-    if (!isPasswordValid){
+    if (!isPasswordValid) {
+      console.log('\n=== ОШИБКА ПАРОЛЯ ===');
+      console.log('Возможные причины:');
+      console.log('1. Неправильный пароль');
+      console.log('2. Проблемы с хешированием при регистрации');
+      console.log('3. Обрезанный хеш в базе данных');
+      
       return res.status(401).json({
         success: false,
-        error: "Неверный пароль"
-      })
+        error: "Неверный пароль",
+        debug: process.env.NODE_ENV === 'development' ? {
+          inputLength: password.length,
+          hashLength: user.password_hash.length,
+          hashPrefix: user.password_hash.substring(0, 10) + '...'
+        } : undefined
+      });
     }
 
-    req.session.userId = user.user_id
+    console.log('\nПароль верный, создаем сессию');
+    req.session.userId = user.user_id;
 
-    res.json({
+    console.log('\n=== УСПЕШНЫЙ ВХОД ===');
+    console.log('ID пользователя:', user.user_id);
+    
+    return res.json({
       success: true,
       message: 'Вход выполнен успешно',
       user: {
@@ -174,15 +209,17 @@ export const login = async (req, res) => {
         username: user.username,
         email: user.email
       }
-    })
+    });
 
-
-  }catch (error){
-    console.error('Ошибка входа:', error)
-    res.status(500).json({
+  } catch (error) {
+    console.error('\n=== ОШИБКА ВХОДА ===');
+    console.error(error);
+    return res.status(500).json({
       success: false,
-      error: 'Ошибка сервера при входе'
-    })
-
+      error: 'Ошибка сервера при входе',
+      ...(process.env.NODE_ENV === 'development' && {
+        details: error.message
+      })
+    });
   }
-} 
+}
