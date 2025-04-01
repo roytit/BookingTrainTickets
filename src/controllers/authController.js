@@ -1,225 +1,198 @@
-import { Op } from 'sequelize';
-import User from '../models/User.js';
+import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
+
+// Вспомогательные функции валидации
+const validateRegistrationInput = (email, password, confirmPassword) => {
+  if (!email || !password || !confirmPassword) {
+    return { isValid: false, error: 'Все поля обязательны для заполнения' };
+  }
+
+  if (password !== confirmPassword) {
+    return { isValid: false, error: 'Пароли не совпадают' };
+  }
+
+  if (password.length < 8) {
+    return { isValid: false, error: 'Пароль должен содержать минимум 8 символов' };
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { isValid: false, error: 'Некорректный формат email' };
+  }
+
+  return { isValid: true };
+};
 
 export const register = async (req, res) => {
   try {
-    // Проверка наличия тела запроса
     if (!req.body || Object.keys(req.body).length === 0) {
-      console.error('Ошибка: Пустое тело запроса');
       return res.status(400).json({ 
-        success: false,
+        success: false, 
         error: 'Необходимо предоставить данные для регистрации' 
       });
     }
 
-    const { username, email, password, confirmPassword } = req.body;
-
-    // Валидация входных данных
-    const errors = [];
-    if (!username) errors.push('Не указано имя пользователя');
-    if (!email) errors.push('Не указан email');
-    if (!password) errors.push('Не указан пароль');
-    if (!confirmPassword) errors.push('Не подтвержден пароль');
+    const { email, password, confirmPassword } = req.body;
     
-    if (errors.length > 0) {
-      console.error('Ошибки валидации:', errors);
+    const validation = validateRegistrationInput(email, password, confirmPassword);
+    if (!validation.isValid) {
       return res.status(400).json({ 
-        success: false,
-        errors 
+        success: false, 
+        error: validation.error 
       });
     }
 
-    // Проверка совпадения паролей
-    if (password !== confirmPassword) {
-      console.error('Пароли не совпадают');
-      return res.status(400).json({ 
-        success: false,
-        error: 'Пароли не совпадают' 
-      });
-    }
-
-    // Проверка сложности пароля
-    if (password.length < 8) {
-      console.error('Пароль слишком короткий');
-      return res.status(400).json({ 
-        success: false,
-        error: 'Пароль должен содержать минимум 8 символов' 
-      });
-    }
-
-    // Проверка существующего пользователя
+    // Проверка существующего email
     const existingUser = await User.findOne({
-      where: {
-        [Op.or]: [
-          { username },
-          { email }
-        ]
-      }
+      where: { email: email.trim() }
     });
 
     if (existingUser) {
-      const conflictField = existingUser.username === username ? 'username' : 'email';
-      console.error(`Пользователь с таким ${conflictField} уже существует`);
-      return res.status(409).json({ 
+      return res.status(409).json({
         success: false,
-        error: `Пользователь с таким ${conflictField} уже существует`,
-        conflictField
+        error: 'Пользователь с таким email уже существует'
       });
     }
 
-    // Хеширование пароля
-    const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(password, saltRounds);
-    console.log('Пароль успешно хеширован');
-
     // Создание пользователя
     const newUser = await User.create({
-      username,
-      email,
-      password_hash: passwordHash,
+      email: email.trim(),
+      password_hash: password.trim(),
       role_id: 1
     });
 
-    console.log('Новый пользователь создан:', {
+    // Сразу авторизуем пользователя после регистрации
+    req.session.user = {
       id: newUser.user_id,
-      username: newUser.username,
-      email: newUser.email,
-      createdAt: newUser.created_at
-    });
+      email: newUser.email
+    };
 
-    // Успешный ответ
     return res.status(201).json({
       success: true,
       message: 'Регистрация успешно завершена',
       user: {
         id: newUser.user_id,
-        username: newUser.username,
         email: newUser.email
       }
     });
-
   } catch (error) {
-    console.error('\n=== КРИТИЧЕСКАЯ ОШИБКА ===');
-    console.error('Сообщение:', error.message);
-    console.error('Стек вызовов:', error.stack);
-    console.error('Тип ошибки:', error.name);
-    
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      console.error('Нарушение уникальности:', error.errors);
-      return res.status(409).json({
-        success: false,
-        error: 'Пользователь с такими данными уже существует',
-        details: error.errors.map(err => ({
-          field: err.path,
-          message: err.message
-        }))
-      });
-    }
-
-    if (error.name === 'SequelizeValidationError') {
-      console.error('Ошибки валидации:', error.errors);
-      return res.status(400).json({
-        success: false,
-        error: 'Ошибка валидации данных',
-        details: error.errors.map(err => ({
-          field: err.path,
-          message: err.message
-        }))
-      });
-    }
-
-    // Общая ошибка сервера
-    return res.status(500).json({
-      success: false,
-      error: 'Внутренняя ошибка сервера',
-      ...(process.env.NODE_ENV === 'development' && {
-        details: error.message,
-        stack: error.stack
-      })
+    console.error('Ошибка регистрации:', error);
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Внутренняя ошибка сервера' 
     });
   }
 };
 
-
 export const login = async (req, res) => {
   try {
-    console.log('\n=== ПОПЫТКА ВХОДА ===');
-    console.log('Полученные данные:', req.body);
-
     const { email, password } = req.body;
-
-    // Добавляем валидацию
+    
     if (!email || !password) {
-      console.log('Ошибка: email или пароль не предоставлены');
-      return res.status(400).json({
-        success: false,
-        error: 'Email и пароль обязательны'
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Email и пароль обязательны' 
       });
     }
 
-    console.log('Поиск пользователя с email:', email);
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email: email.trim() },
+      attributes: ['user_id', 'email', 'password_hash'],
+      timeout: 5000 
+    }).catch(err => {
+      console.error('Ошибка DB:', err);
+      throw new Error('Ошибка базы данных');
+    });
 
     if (!user) {
-      console.log('Пользователь не найден');
-      return res.status(401).json({
+      return res.status(401).json({ 
         success: false,
-        error: 'Пользователь с таким email не найден'
+        error: 'Неверные учетные данные' 
       });
     }
 
-    console.log('\n=== ДАННЫЕ ДЛЯ ПРОВЕРКИ ===');
-    console.log('Введенный пароль:', `"${password}"`, `(длина: ${password.length})`);
-    console.log('Хеш в базе:', `"${user.password_hash}"`, `(длина: ${user.password_hash.length})`);
+    const isMatch = await bcrypt.compare(password.trim(), user.password_hash);
     
-    console.log('\nПроверка пароля...');
-    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-    console.log('Результат сравнения:', isPasswordValid);
-
-    if (!isPasswordValid) {
-      console.log('\n=== ОШИБКА ПАРОЛЯ ===');
-      console.log('Возможные причины:');
-      console.log('1. Неправильный пароль');
-      console.log('2. Проблемы с хешированием при регистрации');
-      console.log('3. Обрезанный хеш в базе данных');
-      
-      return res.status(401).json({
+    if (!isMatch) {
+      return res.status(401).json({ 
         success: false,
-        error: "Неверный пароль",
-        debug: process.env.NODE_ENV === 'development' ? {
-          inputLength: password.length,
-          hashLength: user.password_hash.length,
-          hashPrefix: user.password_hash.substring(0, 10) + '...'
-        } : undefined
+        error: 'Неверные учетные данные' 
       });
     }
 
-    console.log('\nПароль верный, создаем сессию');
-    req.session.userId = user.user_id;
+    // Сохраняем пользователя в сессии
+    req.session.user = {
+      id: user.user_id,
+      email: user.email
+    };
 
-    console.log('\n=== УСПЕШНЫЙ ВХОД ===');
-    console.log('ID пользователя:', user.user_id);
-    
-    return res.json({
+    return res.json({ 
       success: true,
-      message: 'Вход выполнен успешно',
+      message: 'Авторизация успешна',
       user: {
         id: user.user_id,
-        username: user.username,
         email: user.email
       }
     });
-
   } catch (error) {
-    console.error('\n=== ОШИБКА ВХОДА ===');
-    console.error(error);
-    return res.status(500).json({
+    console.error('Ошибка входа:', error);
+    return res.status(500).json({ 
       success: false,
-      error: 'Ошибка сервера при входе',
-      ...(process.env.NODE_ENV === 'development' && {
-        details: error.message
-      })
+      error: error.message || 'Ошибка сервера' 
     });
   }
-}
+};
+
+// Добавляем метод для выхода
+export const logout = async (req, res) => {
+  try {
+    // Уничтожаем сессию
+    req.session.destroy(err => {
+      if (err) {
+        console.error('Ошибка при выходе:', err);
+        return res.status(500).json({ 
+          success: false,
+          error: 'Не удалось выйти из системы' 
+        });
+      }
+      
+      // Очищаем куку сессии
+      res.clearCookie('connect.sid'); // или имя вашей сессионной куки
+      
+      return res.json({ 
+        success: true,
+        message: 'Выход выполнен успешно' 
+      });
+    });
+  } catch (error) {
+    console.error('Ошибка выхода:', error);
+    return res.status(500).json({ 
+      success: false,
+      error: 'Внутренняя ошибка сервера' 
+    });
+  }
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: 'Требуется авторизация' });
+    }
+    
+    // Можно добавить дополнительную проверку пользователя в БД
+    const user = await User.findByPk(req.session.user.id, {
+      attributes: ['user_id', 'email']
+    });
+    
+    if (!user) {
+      return res.status(401).json({ error: 'Пользователь не найден' });
+    }
+    
+    res.json({
+      id: user.user_id,
+      email: user.email
+    });
+  } catch (error) {
+    console.error('Ошибка проверки авторизации:', error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+};

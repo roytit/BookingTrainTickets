@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { login, register } from '../controllers/authController.js';
+import { login, register, checkAuth } from '../controllers/authController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +10,7 @@ const router = Router();
 
 // Авторизация
 router.get('/login', (req, res) => {
-      res.sendFile(path.join(__dirname, '../public/templates/log.html'));
+      res.sendFile(path.join(__dirname, '../public/templates/login.html'));
 })
 
 router.post('/login', login)
@@ -22,5 +22,8 @@ router.get('/register', (req, res) => {
 
 // Обработка формы регистрации
 router.post('/register', register);
+
+// Добавьте этот маршрут
+router.get('/api/check-auth', checkAuth);
 
 export default router;
