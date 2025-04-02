@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch('/api/check-auth', {
       credentials: 'include'
     });
-    
+
     if (!response.ok) {
       throw new Error('Требуется авторизация');
     }
-    
+
     const user = await response.json();
     document.getElementById('email').textContent = user.email;
     document.getElementById('lastName').textContent = user.last_name || 'Не указано';
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     console.error('Ошибка:', error);
   }
-  
+
   document.getElementById('logoutBtn').addEventListener('click', async () => {
     await fetch('/logout', { 
       method: 'POST',
@@ -26,35 +26,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.href = '/login';
   });
 
+  // Определение активной вкладки
+  const currentPath = window.location.pathname;
+  if (currentPath.includes('user-info')) {
+    document.getElementById('accountTab').classList.add('active');
+    document.getElementById('ordersTab').classList.remove('active');
+  } else if (currentPath.includes('user-history')) {
+    document.getElementById('ordersTab').classList.add('active');
+    document.getElementById('accountTab').classList.remove('active');
+  }
+
   // Переключение вкладок
-  const accountTab = document.getElementById('accountTab');
-  const ordersTab = document.getElementById('ordersTab');
-  const accountSection = document.querySelector('.user-info');
-  const ordersSection = document.querySelector('.orders');
-
-  accountTab.addEventListener('click', () => {
-    accountTab.classList.add('active');
-    ordersTab.classList.remove('active');
-    accountSection.style.display = 'block';
-    ordersSection.style.display = 'none';
+  document.getElementById('ordersTab').addEventListener('click', () => {
+    document.getElementById('ordersTab').classList.add('active');
+    document.getElementById('accountTab').classList.remove('active');
+    setTimeout(() => {
+      window.location.href = '/profile/user-history';
+    }, 300);
   });
 
-  ordersTab.addEventListener('click', () => {
-    ordersTab.classList.add('active');
-    accountTab.classList.remove('active');
-    accountSection.style.display = 'none';
-    ordersSection.style.display = 'block';
-  });
-
-  // Анимация кнопок
-  const buttons = document.querySelectorAll('button');
-  buttons.forEach(button => {
-    button.addEventListener('mouseenter', () => {
-      button.style.transform = 'scale(1.05)';
-      button.style.transition = 'transform 0.2s ease-in-out';
-    });
-    button.addEventListener('mouseleave', () => {
-      button.style.transform = 'scale(1)';
-    });
+  document.getElementById('accountTab').addEventListener('click', () => {
+    document.getElementById('accountTab').classList.add('active');
+    document.getElementById('ordersTab').classList.remove('active');
+    setTimeout(() => {
+      window.location.href = '/profile/user-info';
+    }, 300);
   });
 });

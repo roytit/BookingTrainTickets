@@ -16,35 +16,37 @@
     <h1>Личный кабинет</h1>
     
     <nav>
-      <button class="tab active">Информация об аккаунте</button>
-      <button class="tab" onclick="window.location.href='/profile/user-history'">Заказы</button>
+      <button class="tab active" id="accountTab">Информация об аккаунте</button>
+      <button class="tab" id="ordersTab">Заказы</button>
     </nav>
     
     <section class="user-info">
-      <div class="info-row">
-        <span>Почта</span>
-        <span id="email"></span>
+      <div class="info-block full-width">
+        <span class="info-label">Почта</span>
+        <span id="email" class="info-value"></span>
+        <button class="edit-btn">✎ Изменить</button>
+      </div>
+      <div class="info-block full-width">
+        <span class="info-label">Смена пароля</span>
+        <span id="password" class="info-value">•••••••••</span>
         <button class="edit-btn">✎ Изменить</button>
       </div>
       <div class="info-row">
-        <span>Смена пароля</span>
-        <span id="password">•••••••••</span>
-        <button class="edit-btn">✎ Изменить</button>
-      </div>
-      <div class="info-row">
-        <span>Фамилия</span>
-        <span id="lastName"></span>
-        <button class="edit-btn">✎ Изменить</button>
-      </div>
-      <div class="info-row">
-        <span>Имя</span>
-        <span id="firstName"></span>
-        <button class="edit-btn">✎ Изменить</button>
-      </div>
-      <div class="info-row">
-        <span>Отчество</span>
-        <span id="middleName"></span>
-        <button class="edit-btn">✎ Изменить</button>
+        <div class="info-block third-width">
+          <span class="info-label">Фамилия</span>
+          <span id="lastName" class="info-value"></span>
+          <button class="edit-btn">✎ Изменить</button>
+        </div>
+        <div class="info-block third-width">
+          <span class="info-label">Имя</span>
+          <span id="firstName" class="info-value"></span>
+          <button class="edit-btn">✎ Изменить</button>
+        </div>
+        <div class="info-block third-width">
+          <span class="info-label">Отчество</span>
+          <span id="middleName" class="info-value"></span>
+          <button class="edit-btn">✎ Изменить</button>
+        </div>
       </div>
     </section>
   </main>

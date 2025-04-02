@@ -16,10 +16,13 @@
     <h1>Личный кабинет</h1>
     
     <nav>
-      <button class="tab active" onclick="window.location.href='/profile/user-info'">Информация об аккаунте</button>
-      <button class="tab">Заказы</button>
+      <button class="tab" onclick="window.location.href='/profile/user-info'" id="accountTab">Информация об аккаунте</button>
+      <button class="tab active" onclick="window.location.href='/profile/user-history'" id="ordersTab">Заказы</button>
     </nav>
     
     <h1>История заказов</h1>
+  </main>
+
+  <script src="../js/user-history.js"></script>
 </body>
 </html>
