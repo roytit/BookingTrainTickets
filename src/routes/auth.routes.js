@@ -2,6 +2,7 @@ import { Router } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { login, register, checkAuth } from '../controllers/authController.js';
+import { updateEmail } from '../controllers/authController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,7 +24,8 @@ router.get('/register', (req, res) => {
 // Обработка формы регистрации
 router.post('/register', register);
 
-// Добавьте этот маршрут
 router.get('/api/check-auth', checkAuth);
+
+router.post('/api/update-email', updateEmail);
 
 export default router;

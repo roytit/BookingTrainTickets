@@ -109,4 +109,24 @@ nav {
 .edit-btn:hover {
   background: gray;
 }
-  
+
+/* Добавляем в конец файла */
+.email-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: inherit;
+  font-family: inherit;
+  width: 250px;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.edit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

@@ -198,3 +198,56 @@ export const checkAuth = async (req, res) => {
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 };
+
+// Добавляем в authController.js
+export const updateEmail = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: 'Требуется авторизация' });
+    }
+
+    const { email } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({ error: 'Email обязателен' });
+    }
+
+    // Проверка формата email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: 'Некорректный формат email' });
+    }
+
+    // Проверка на существующий email
+    const existingUser = await User.findOne({
+      where: { email: email.trim() }
+    });
+
+    if (existingUser && existingUser.user_id !== req.session.user.id) {
+      return res.status(409).json({ error: 'Пользователь с таким email уже существует' });
+    }
+
+    // Обновление email
+    const [updated] = await User.update(
+      { email: email.trim() },
+      { 
+        where: { user_id: req.session.user.id },
+        returning: true
+      }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: 'Пользователь не найден' });
+    }
+
+    // Обновляем email в сессии
+    req.session.user.email = email.trim();
+    
+    res.json({ 
+      success: true,
+      email: email.trim() 
+    });
+  } catch (error) {
+    console.error('Ошибка обновления email:', error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+};
