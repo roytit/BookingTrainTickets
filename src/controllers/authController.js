@@ -251,3 +251,62 @@ export const updateEmail = async (req, res) => {
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { last_name, first_name, middle_name } = req.body;
+    const userId = req.session.user.id;
+
+    await User.update(
+      { last_name, first_name, middle_name },
+      { where: { user_id: userId } }
+    );
+
+    // Получаем обновленные данные пользователя
+    const updatedUser = await User.findByPk(userId, {
+      attributes: ['user_id', 'email', 'last_name', 'first_name', 'middle_name']
+    });
+
+    res.json({ 
+      success: true, 
+      message: 'Данные успешно обновлены',
+      user: updatedUser
+    });
+  } catch (error) {
+    console.error('Ошибка обновления профиля:', error);
+    res.status(500).json({ success: false, error: 'Ошибка сервера' });
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const userId = req.session.user.id;
+
+    // Получаем текущий пароль пользователя
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'Пользователь не найден' });
+    }
+
+    // Проверяем текущий пароль
+    const isMatch = await bcrypt.compare(currentPassword, user.password_hash);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, error: 'Неверный текущий пароль' });
+    }
+
+    // Хешируем новый пароль
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Обновляем пароль
+    await User.update(
+      { password_hash: hashedPassword },
+      { where: { user_id: userId } }
+    );
+
+    res.json({ success: true, message: 'Пароль успешно изменен' });
+  } catch (error) {
+    console.error('Ошибка обновления пароля:', error);
+    res.status(500).json({ success: false, error: 'Ошибка сервера' });
+  }
+};
