@@ -8,19 +8,27 @@
 </head>
 <body>
   <header>
-    <div class="logo">🔳</div>
+    <div class="logo"></div>
+    <button class="home-btn" id="homeBtn" onclick="window.location.href='/'">На главную</button>
     <button class="logout-btn" id="logoutBtn">Выйти</button>
   </header>
   
   <main>
-    <h1>Личный кабинет</h1>
+    <h1>История заказов</h1>
     
     <nav>
-      <button class="tab" onclick="window.location.href='/profile/user-info'" id="accountTab">Информация об аккаунте</button>
-      <button class="tab active" onclick="window.location.href='/profile/user-history'" id="ordersTab">Заказы</button>
+      <button class="tab" onclick="window.location.href='/profile/user-info'" id="accountTab">
+        <img src="../icons/info.svg" alt="" class="icon"> Информация об аккаунте
+      </button>
+      <button class="tab active" onclick="window.location.href='/profile/user-history'" id="ordersTab">
+        <img src="../icons/order.svg" alt="" class="icon"> Заказы
+      </button>
     </nav>
+    <div id="notification" class="notification">
+      Пароль успешно изменен
+    </div>
     
-    <h1>История заказов</h1>
+    
   </main>
 
   <script src="../js/user-history.js"></script>

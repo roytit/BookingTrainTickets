@@ -8,7 +8,8 @@
 </head>
 <body>
   <header>
-    <div class="logo">🔳</div>
+    <div class="logo"></div>
+    <button class="home-btn" id="homeBtn" onclick="window.location.href='/'">На главную</button>
     <button class="logout-btn" id="logoutBtn">Выйти</button>
   </header>
   
@@ -16,34 +17,51 @@
     <h1>Личный кабинет</h1>
     
     <nav>
-      <button class="tab active" id="accountTab">Информация об аккаунте</button>
-      <button class="tab" id="ordersTab">Заказы</button>
+      <button class="tab active" id="accountTab">
+        <img src="../icons/info.svg" alt="" class="icon"> Информация об аккаунте
+      </button>
+      <button class="tab" id="ordersTab">
+        <img src="../icons/order.svg" alt="" class="icon"> Заказы
+      </button>
     </nav>
+    <div id="notification" class="notification">
+      Пароль успешно изменен
+    </div>
     
     <section class="user-info">
       <div class="info-block full-width">
-        <span class="info-label">Почта</span>
+        <span class="info-label">
+          <img src="../icons/mail.svg" alt="" class="icon"> Почта
+        </span>
         <span id="email" class="info-value"></span>
         <button class="edit-btn">✎ Изменить</button>
       </div>
       <div class="info-block full-width">
-        <span class="info-label">Смена пароля</span>
+        <span class="info-label">
+          <img src="../icons/mail.svg" alt="" class="icon"> Смена пароля
+        </span>
         <span id="password" class="info-value">•••••••••</span>
         <button class="edit-btn">✎ Изменить</button>
       </div>
       <div class="info-row">
         <div class="info-block third-width">
-          <span class="info-label">Фамилия</span>
+          <span class="info-label">
+            <img src="../icons/mail.svg" alt="" class="icon"> Фамилия
+          </span>
           <span id="lastName" class="info-value"></span>
           <button class="edit-btn">✎ Изменить</button>
         </div>
         <div class="info-block third-width">
-          <span class="info-label">Имя</span>
+          <span class="info-label">
+            <img src="../icons/mail.svg" alt="" class="icon"> Имя
+          </span>
           <span id="firstName" class="info-value"></span>
           <button class="edit-btn">✎ Изменить</button>
         </div>
         <div class="info-block third-width">
-          <span class="info-label">Отчество</span>
+          <span class="info-label">
+            <img src="../icons/mail.svg" alt="" class="icon"> Отчество
+          </span>
           <span id="middleName" class="info-value"></span>
           <button class="edit-btn">✎ Изменить</button>
         </div>

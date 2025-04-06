@@ -1,89 +1,237 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-  }
-  
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 15px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo {
-    font-size: 24px;
-  }
-  
-  .logout-btn {
-    background: black;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.3s;
-  }
-  
-  .logout-btn:hover {
-    background: #333;
-  }
-  
-  nav {
-    display: flex;
-    justify-content: flex-start;
-    padding: 20px;
-  }
-  
-  .tab {
-    background: #eee;
-    border: none;
-    padding: 12px 24px;
-    margin-right: 10px;
-    cursor: pointer;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 16px;
-    transition: all 0.3s;
-  }
-  
-  .tab.active {
-    background: black;
-    color: white;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
 
-  
-  .orders {
-    display: none;
-  }
-  
-  .order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-radius: 10px;
-    background: #f1f1f1;
-    margin-bottom: 10px;
-  }
-  
-  .order-btn {
-    background: black;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.3s;
-  }
-  
-  .order-btn:hover {
-    background: #333;
-  }
-  
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  padding: 15px 20px;
+  color: white;
+}
+
+.logout-btn {
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  cursor: pointer;
+  background: #2C2C2C;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.logout-btn:hover {
+  background: gray;
+}
+
+.logo{
+  width: 30px; /* задаем размеры */
+  height: 30px;
+  background-image: url('../icons/logo.svg');
+  background-size: cover; /* чтобы картинка заполнила блок */
+  background-position: center;
+}
+
+h1 {
+  text-align: left;
+  margin-left: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.tab {
+  background: #eee;
+  border: none;
+  padding: 12px 24px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: background 0.3s, color 0.3s, transform 0.2s ease-in-out;
+}
+
+.tab:hover {
+  transform: scale(1.05);
+}
+
+.tab.active {
+  background: #2C2C2C;
+  color: white;
+}
+
+.user-info {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 40px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.info-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f1f1f1;
+  width: 100%;
+}
+
+.full-width {
+  width: calc(100% - 30px); 
+  margin: 0 auto;
+}
+
+.third-width {
+  width: calc(33.33% - 10px);
+}
+
+.edit-btn {
+  background: #2C2C2C;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.edit-btn:hover {
+  background: gray;
+}
+
+/* Добавляем в конец файла */
+.email-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: inherit;
+  font-family: inherit;
+  width: 250px;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.edit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.password-inputs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.password-inputs-container input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.password-inputs-container input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.input-error-message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
+#notification {
+  position: fixed;
+  top: 20px; /* Расстояние от верхней части */
+  left: 50%;
+  transform: translateX(-50%); /* Центрирование по горизонтали */
+  background-color: #4CAF50; /* Зеленый цвет */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: none; /* Скрыто по умолчанию */
+  opacity: 0; /* Невидимо */
+  transition: opacity 0.5s ease, top 0.5s ease; /* Плавное появление и скрытие */
+}
+
+#notification.show {
+  display: block;
+  opacity: 1; /* Сделаем видимым */
+  top: 20px; /* При появлении оставляем сверху */
+}
+
+/* Добавьте в конец файла */
+.home-btn {
+  background: #2C2C2C;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+  margin: 0 auto;
+  display: block;
+}
+
+.home-btn:hover {
+  background: gray;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  padding: 15px 20px;
+  color: white;
+  gap: 15px;
+}
+
+/* Стили для иконок */
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Стили для иконок в кнопках табов */
+.tab .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Стили для иконок в активной вкладке */
+.tab.active .icon {
+  filter: brightness(0) invert(1);
+}
