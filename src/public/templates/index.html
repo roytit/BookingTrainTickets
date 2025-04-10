@@ -17,7 +17,6 @@
       <!-- Кнопки будут отрисованы скриптом -->
     </div>
   </header>
-
   <div class="container">
     <section class="hero">
       <img src="../images/main.png" alt="Поезд" class="background-img">
@@ -25,7 +24,6 @@
         <h1>Выбирайте лучшие билеты</h1>
       </div>          
     </section>
-
     <section class="search">
       <div class="routes">
         <span>⚡ Актуальные направления для Москва</span>
@@ -85,8 +83,9 @@
       </div>
     </section>
     <section class="tickets">
-        <div class="ticket">
-          <div class="ticket-info">
+      <div class="ticket">
+        <div class="ticket-info">
+          <div class="route-line">
             <div class="departure">
               <div class="city">Москва</div>
               <div class="station">Белорусский вокзал</div>
@@ -97,17 +96,24 @@
               <div class="station">Московский вокзал</div>
               <div class="time">05:00 <span>29 марта 2025</span></div>
             </div>
+            <div class="line-container">
+              <div class="line"></div>
+              <div class="circle start-circle"></div>
+              <div class="circle end-circle"></div>
+            </div>
           </div>
-          <div class="ticket-action">
-            <div class="price">9.999₽</div>
-            <div class="availability">Осталось 5 мест</div>
-            <button class="ticket-button">Выбрать билет</button>
-          </div>
+          <div class="travel-time">4 часа в пути</div>
         </div>
-      
-        <!-- Второй билет (можно дублировать для демонстрации) -->
-        <div class="ticket">
-          <div class="ticket-info">
+        <div class="ticket-action">
+          <div class="price">9.999₽</div>
+          <div class="availability">Осталось 5 мест</div>
+          <button class="ticket-button">Выбрать билет</button>
+        </div>
+      </div>
+      <!-- Второй билет (можно дублировать для демонстрации) -->
+      <div class="ticket">
+        <div class="ticket-info">
+          <div class="route-line">
             <div class="departure">
               <div class="city">Москва</div>
               <div class="station">Белорусский вокзал</div>
@@ -118,15 +124,21 @@
               <div class="station">Московский вокзал</div>
               <div class="time">05:00 <span>29 марта 2025</span></div>
             </div>
+            <div class="line-container">
+              <div class="line"></div>
+              <div class="circle start-circle"></div>
+              <div class="circle end-circle"></div>
+            </div>
           </div>
-          <div class="ticket-action">
-            <div class="price">9.999₽</div>
-            <div class="availability">Осталось 5 мест</div>
-            <button class="ticket-button">Выбрать билет</button>
-          </div>
+          <div class="travel-time">4 часа в пути</div>
         </div>
-      </section>
-      
+        <div class="ticket-action">
+          <div class="price">9.999₽</div>
+          <div class="availability">Осталось 5 мест</div>
+          <button class="ticket-button">Выбрать билет</button>
+        </div>
+      </div>
+    </section>
   </div>
 </body>
 </html>

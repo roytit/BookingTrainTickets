@@ -1,10 +1,15 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import mainRouter from './routes/index.js';
+import mainRouter from './routes/index.routes.js';
 import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
+import { initializeModels } from './models/index.models.js';
+import sequelize from './models/index.models.js';
+
+// Инициализация моделей и ассоциаций
+initializeModels();
 
 // Загрузка .env
 dotenv.config();

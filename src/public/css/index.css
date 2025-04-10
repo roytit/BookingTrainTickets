@@ -1,5 +1,4 @@
 @import url('/static/fonts/stylesheet.css');
-
 body {
     font-family: 'Gilroy';   
     font-weight: 400;
@@ -11,9 +10,8 @@ body {
     flex-direction: column;
     height: 100vh;
     overflow-y: auto;
-    color: #2C2C2C
+    color: #2C2C2C;
 }
-
 header {
     display: flex;
     justify-content: space-between;
@@ -25,7 +23,6 @@ header {
     z-index: 1000;
     background: transparent;
 }
-
 .logo {
     background-color: white; /* Белая подложка */
     padding: 10px; /* Отступы внутри блока */
@@ -34,12 +31,10 @@ header {
     align-items: center; /* Центрирование по вертикали */
     justify-content: center; /* Центрирование по горизонтали */
 }
-
 .logo img {
     max-width: 100%; /* Чтобы изображение не выходило за пределы блока */
     height: auto; /* Сохраняем пропорции */
 }
-
 .auth-buttons .btn {
     background-color: white; /* Белый фон */
     color: #2C2C2C; /* Цвет текста */
@@ -56,24 +51,20 @@ header {
     align-items: center; /* Центрирование по вертикали */
     justify-content: center; /* Центрирование по горизонтали */
 }
-
 .auth-buttons .btn:hover {
     background-color: #f5f5f5; /* Цвет фона при наведении */
     border-color: #ccc; /* Цвет границы при наведении */
 }
-
 .auth-buttons .btn:active {
     background-color: #e0e0e0; /* Цвет фона при нажатии */
     transform: scale(0.92); /* Легкое уменьшение кнопки при нажатии */
 }
-
 .container {
     flex: 1;
     display: flex;
     flex-direction: column;
     position: relative;
 }
-
 .hero {
     position: relative;
     text-align: center;
@@ -81,7 +72,6 @@ header {
     flex: 1;
     height: 100vh;
 }
-
 .hero-text {
     position: absolute;
     top: 50%; /* Позиционируем текст по вертикали */
@@ -91,49 +81,39 @@ header {
     box-sizing: border-box;
     top: calc(50% + 70px);
 }
-
 .hero h1 {
     font-size: 64px;
     font-weight: 600;
     margin: 0; /* Убираем стандартные отступы */
 }
-
-
 .background-img {
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 100vh;
     filter: brightness(0.6);
+    z-index: 1;
 }
-
-
 .search {
     background: white;
     padding: 15px;
     width: calc(100% - 80px);
     box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
     border-radius: 10px;
+    margin: -280px auto 0px auto; /* -50px чтобы частично наехать на .hero, 80px — отступ снизу */
     position: relative;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    margin: 0 auto;
+    z-index: 5;
 }
-
 .routes {
     display: flex;
     align-items: center;
     margin-bottom: 50px;
     position: relative;
 }
-
 .routes span{
     font-size: 24px;
     font-weight: 600;
 }
-
-
 .destinations {
     position: absolute;
     top: 10px;
@@ -141,7 +121,6 @@ header {
     display: flex;
     gap: 10px;
 }
-
 .destinations .destination-btn {
     background: none;
     border: none;
@@ -154,26 +133,21 @@ header {
     gap: 8px; /* расстояние между иконкой и текстом */
     transition: all 0.3s ease;
 }
-
 .destinations .destination-btn .icon {
     width: 16px;
     height: 16px;
     object-fit: contain;
     display: none; /* Скрываем иконку по умолчанию */
 }
-
 .destinations .destination-btn.active {
     background: #ff5c33;
     color: white;
     border-radius: 5px;
     padding: 10px;
 }
-
 .destinations .destination-btn.active .icon {
     display: inline-block; /* Показываем иконку только для активной кнопки */
 }
-
-
 .form {
     display: flex;
     align-items: center;
@@ -181,7 +155,6 @@ header {
     gap: 10px;
     width: 100%;
 }
-
 .field {
     flex: 1;
     display: flex;
@@ -189,7 +162,6 @@ header {
     justify-content: center;
     min-height: 72px;
 }
-
 .input-wrapper {
     display: flex;
     align-items: center;
@@ -200,7 +172,6 @@ header {
     height: 44px;
     overflow: hidden;
 }
-
 .input-wrapper .icon {
     position: absolute;
     width: 24px;
@@ -208,12 +179,9 @@ header {
     cursor: pointer;
     z-index: 1;
 }
-
-
 .input-wrapper .icon.left {
     left: 10px;
 }
-
 .input-wrapper .icon.right {
     background: url('../icons/calendar-icon.png') no-repeat center center;
     background-size: 24px 24px;
@@ -222,13 +190,11 @@ header {
     cursor: pointer;
     right: 10px;
 }
-
 .input-wrapper img.icon {
     width: 24px;
     height: 24px;
     object-fit: contain;
 }
-
 .input-wrapper input,
 .input-wrapper select {
     flex: 1;
@@ -239,31 +205,26 @@ header {
     height: 100%;
     font-size: 16px;
 }
-
 .icon {
     font-size: 20px;
     color: #666;
 }
-
 .field label {
     color: gray;
     margin-bottom: 5px;
     font-weight: 600;
     font-size: 16px;
 }
-
 input, select {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
 .hidden-input {
     position: absolute;
     opacity: 1;
     pointer-events: auto;
 }
-
 input[type="date"] {
     font-size: 16px;
     padding: 10px;
@@ -271,17 +232,14 @@ input[type="date"] {
     border: none;
     border-radius: 5px;
 }
-
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
 }
-
 .formatted-date {
     padding-left: 35px;
     cursor: pointer;
     font-size: 16px;
 }
-
 .swap-btn {
     width: 44px;
     height: 44px;
@@ -295,12 +253,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 20px;
     transition: background 0.3s;
 }
-
 .swap-btn:hover {
     background: #444;
 }
-
-
 .search-btn {
     background: #2C2C2C;
     color: white;
@@ -315,7 +270,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     min-width: 120px;
     align-self: flex-end;
 }
-
 .tickets {
     padding: 40px 32px;
     display: flex;
@@ -323,100 +277,134 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 24px;
     width: 100%;
     box-sizing: border-box;
-  }
-  
-  
-  .ticket {
-    background: white;
+    background: #ffffff;
+    margin-top: 70px;
+}
+
+.ticket {
+    background: #d6d6d6;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     display: flex;
     justify-content: space-between;
     padding: 24px;
-    flex-wrap: wrap;
     gap: 16px;
-  }
-  
-  .ticket-info {
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    flex: 2;
-  }
-  
-  .departure, .arrival {
+}
+
+.ticket-info {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-  }
-  
-  .city {
-    font-size: 18px;
-    font-weight: 600;
-  }
-  
-  .station {
-    font-size: 14px;
-    color: gray;
-  }
-  
-  .time {
-    font-size: 18px;
-    font-weight: 500;
-  }
-  
-  .time span {
-    font-size: 12px;
-    color: #999;
-  }
-  
-  .ticket-action {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     justify-content: space-between;
+    width: 80%;
+    padding-right: 20px;
+    position: relative;
+}
+
+.departure, .arrival {
+    display: flex;
+    flex-direction: column;
     gap: 8px;
-    min-width: 160px;
-  }
-  
-  .price {
-    font-size: 22px;
+}
+
+.city {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.station {
+    font-size: 16px;
+    color: gray;
+}
+
+.time {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.time span {
+    font-size: 14px;
+    color: #999;
+}
+
+.ticket-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+    text-align: center;
+}
+
+.price {
+    font-size: 24px;
     font-weight: 700;
-  }
-  
-  .availability {
+}
+
+.availability {
     color: red;
     font-weight: 500;
-  }
-  
-  .ticket-button {
+}
+
+.ticket-button {
     background: #2C2C2C;
     color: white;
-    padding: 10px 16px;
+    padding: 16px;
+    width: 100%;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     transition: 0.3s ease;
-  }
-  
-  .ticket-button:hover {
+}
+
+.ticket-button:hover {
     background: #444;
-  }
-  
-  @media (max-width: 768px) {
-    .ticket {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .ticket-action {
-      align-items: flex-start;
-    }
-  
-    .ticket-info {
-      flex-direction: column;
-      gap: 20px;
-    }
-  }
-  
+}
+
+.route-line {
+    display: flex;
+    justify-content: space-between;
+    position: relative; /* Добавлено для позиционирования линии */
+    margin-bottom: 16px; /* Отступ между route-line и travel-time */
+}
+
+.line-container {
+    position: absolute;
+    bottom: -20px; /* Позиционируем линию под блоками */
+    width: 100%;
+    height: 0px;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background: #2C2C2C;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.circle {
+    width: 8px;
+    height: 8px;
+    background: #2C2C2C;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.start-circle {
+    left: 0;
+}
+
+.end-circle {
+    right: 0;
+}
+
+.travel-time {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+    margin-top: 8px;
+}
